@@ -1,6 +1,6 @@
 # FirePagination
 
-`FirePagination` is an improved version of the `firebase_pagination` package that simplifies the implementation of paginated Firestore queries. It provides automatic pagination, supports multiple view types (ListView, GridView, Wrap, PageView), and includes additional features such as error handling, initial item limits, and real-time updates.
+`FirePagination` is an improved version of the [`firebase_pagination`](https://github.com/OutdatedGuy/firebase_pagination) package that simplifies the implementation of paginated Firestore queries. It provides automatic pagination, supports multiple view types (ListView, GridView, Wrap, PageView), and includes additional features such as error handling, initial item limits, and real-time updates.
 
 ## Features ✨
 
@@ -103,3 +103,7 @@ class FirePaginationDemo extends StatelessWidget {
 - **listenForUpdates**: Listen for real-time updates to existing documents.
 - **onEmpty**: A widget to display when no documents are found.
 - **onError**: A callback that returns a widget to display when an error occurs.
+
+## Credits 🙏
+
+This package is based on the [`firebase_pagination`](https://github.com/OutdatedGuy/firebase_pagination) package by [OutdatedGuy](https://github.com/OutdatedGuy). We've extended it with additional features like error handling, initial limits, and real-time updates to better suit our project's needs.
