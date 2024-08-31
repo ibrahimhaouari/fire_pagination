@@ -30,7 +30,7 @@ import 'functions/separator_builder.dart';
 /// Optimized for [FirebaseFirestore] with fields like `createdAt` and
 /// `timestamp` to sort the data.
 ///
-/// Supports live updates and realtime updates to loaded data.
+/// Supports live add and realtime updates to loaded data.
 ///
 /// Data can be represented in a [ListView], [GridView] or scollable [Wrap].
 class FirePagination extends StatefulWidget {
@@ -40,7 +40,7 @@ class FirePagination extends StatefulWidget {
   /// Optimized for [FirebaseFirestore] with fields like `createdAt` and
   /// `timestamp` to sort the data.
   ///
-  /// Supports live updates and realtime updates to loaded data.
+  /// Supports live add and realtime updates to loaded data.
   ///
   /// Data can be represented in a [ListView], [GridView] or scollable [Wrap].
   const FirePagination({
@@ -268,7 +268,7 @@ class _FirePaginationState extends State<FirePagination> {
         ..addAll(snapshot.docs);
 
       // To set new updates listener for the existing data
-      // or to set new live listener if the first document is removed.
+      // or to set new add listener if the first document is removed.
       final isDocRemoved = snapshot.docChanges.any(
         (DocumentChange change) => change.type == DocumentChangeType.removed,
       );
@@ -316,7 +316,7 @@ class _FirePaginationState extends State<FirePagination> {
       docsQuery = docsQuery.startAtDocument(_lastDoc!);
     }
 
-    // Perform one-time fetch without live updates
+    // Perform one-time fetch without live add
     final snapshot = await docsQuery.get();
     if (snapshot.docs.isNotEmpty) {
       if (getMore) {
@@ -350,11 +350,11 @@ class _FirePaginationState extends State<FirePagination> {
 
 
 
-  /// Sets the live listener for the query.
+  /// Sets the add listener for the query.
   ///
   /// Fires when new data is added to the query.
   Future<void> _setAddListener() async {
-    // To cancel previous live listener when new one is set.
+    // To cancel previous add listener when new one is set.
     final tempSub = _addStreamSub;
 
     var latestDocQuery = widget.query.limit(1);
@@ -374,7 +374,7 @@ class _FirePaginationState extends State<FirePagination> {
 
         _docs.insert(0, snapshot.docs.first);
 
-        // To handle newly added data after this curently loaded data.
+        // To handle newly added data after this currently loaded data.
         await _setAddListener();
 
         // Set updates listener for the newly added data.
