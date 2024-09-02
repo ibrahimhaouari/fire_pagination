@@ -367,10 +367,11 @@ class _FirePaginationState extends State<FirePagination> {
       (QuerySnapshot snapshot) async {
         await tempSub?.cancel();
         if (snapshot.docs.isEmpty ||
-            //snapshot.docs.first.metadata.hasPendingWrites || // Displaying the data even if it is not yet written to the server.
-            snapshot.docChanges.isEmpty ||
-            snapshot.docChanges.first.type != DocumentChangeType.added
+            snapshot.docs.first.metadata.hasPendingWrites
             ) return;
+
+        final docExists = _docs.any((doc) => doc.id == snapshot.docs.first.id);
+        if (docExists) return;
 
         _docs.insert(0, snapshot.docs.first);
 
