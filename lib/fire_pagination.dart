@@ -399,11 +399,37 @@ class _FirePaginationState extends State<FirePagination> {
     }
   }
 
+    // Previous query to detect changes
+  late Query _previousQuery;
+
   @override
   void initState() {
     super.initState();
+    _previousQuery = widget.query;
     _loadDocuments();
     _controller.addListener(_scrollListener);
+  }
+
+  @override
+  void didUpdateWidget(FirePagination oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    // Check if the query has changed
+    if (widget.query != _previousQuery) {
+      // Update the previous query
+      _previousQuery = widget.query;
+
+      // Cancel existing listeners and reset state
+      _streamSub?.cancel();
+      _addStreamSub?.cancel();
+      _lastDoc = null;
+      _isInitialLoading = true;
+      _isEnded = false;
+      _docs.clear();
+
+      // Load documents with the new query
+      _loadDocuments();
+    }
   }
 
   @override
