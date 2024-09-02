@@ -313,7 +313,7 @@ class _FirePaginationState extends State<FirePagination> {
 
     var docsQuery = widget.query.limit(docsLimit);
     if (_lastDoc != null) {
-      docsQuery = docsQuery.startAtDocument(_lastDoc!);
+      docsQuery = docsQuery.startAfterDocument(_lastDoc!);
     }
 
     // Perform one-time fetch without live add
